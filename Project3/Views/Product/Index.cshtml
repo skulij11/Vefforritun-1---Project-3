@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Project3.Models.Product>
+
+@{
+    ViewBag.Title = "Products";
+}
+<h1>Products @Html.ActionLink("Create New Product", "Create", null, new { @class = "btn btn-success" })</h1>
+    
+<br/>
+@foreach (var item in ViewBag.Categories)
+{
+    object buttonclass = null;
+    if (item.Value == "")
+    {
+        item.Value = "0";
+        buttonclass = new { @class = "btn btn-primary" };
+    }
+
+    else
+    {
+        buttonclass = new { @class = "btn btn-link" };
+    }
+    @Html.ActionLink((string)item.Text, "Filter", new { id = Convert.ToInt32(item.Value) }, buttonclass);
+}
+<br />
+<br />
+<div class ="row">
+    @foreach (var item in Model)
+    {
+        <div class ="col-md-4">
+            <div class="insidebox">   
+                <h3>@Html.DisplayFor(modelItem => item.Name)</h3>
+                <p>@Html.DisplayFor(modelItem => item.Description)</p>
+                <p>Price: @Html.DisplayFor(modelItem => item.Price)</p>
+                <p>Stock: @Html.DisplayFor(modelItem => item.Stock)</p>  
+                <p>@Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "btn btn-default" })</p>       
+            </div>
+        </div>
+    }
+</div>
